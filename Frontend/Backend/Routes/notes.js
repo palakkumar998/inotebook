@@ -28,7 +28,9 @@ router.post('/addnote', fetchuser,
     [body('title', 'enter a valid title').isLength({ min: 3 }),
     body('description', 'enter atleast 5 char description').isLength({ min: 5 }),], async (req, res) => {
         try {
-            const { title, description, tag } =  req.body;
+
+            //destructring from body:
+            const { title, description, tag } = req.body;
 
             // If there are errors, return Bad request and the errors
             const errors = validationResult(req);
@@ -37,12 +39,16 @@ router.post('/addnote', fetchuser,
                     errors: errors.array()
                 })
             }
+
             const note = new Note({
                 title, description, tag, user: req.user.id
             }
             )
+
+            //saving note into DB:
             const savedNote = await note.save();
 
+            //sending response as json (saved note)
             res.json(savedNote)
 
         } catch (error) {
@@ -51,6 +57,29 @@ router.post('/addnote', fetchuser,
         }
 
     })
+
+//Route - 3: get all the notes using PUT: /api/notes/updatenote:
+router.put('/updatenote/:id', fetchuser, async (req, res) => {
+    //destructring from body:
+    const { title, description, tag } = req.body;
+
+    const newNote = {};
+    if (title) { newNote.title = title };
+    if (description) { newNote.description = description };
+    if (tag) { newNote.tag = tag };
+
+    let note = await Note.findById(req.params.id)
+    if (!note) {
+        return res.status(404).send("Not found")
+    }
+
+    if (note.user.toString() !== req.user.id) {
+        return res.status(401).send("Not allowed")
+    }
+
+    note = await Note.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
+    res.json({ note })
+})
 
 
 module.exports = router;
