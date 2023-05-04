@@ -1,29 +1,31 @@
 import './App.css';
 import {
-  BrowserRouter as Router, Switch,
+  BrowserRouter as Router,
   Route
 } from "react-router-dom";
 
 import { Navbar } from './Components/Navbar';
 import { Home } from './Components/Home';
 import { About } from './Components/About';
+import NoteState from './Context/notes/NoteState';
 
 
 function App() {
   return (
     < >
-
-      <Router>
-        <Switch>
+      <NoteState>
+        <Router>
           <Navbar />
-          <Route exact path="/">
-           <Home />
-          </Route>
-          <Route exact path="/about">
-            <About />
-          </Route>
-        </Switch>
-      </Router>
+          <div className="container">
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/about">
+              <About />
+            </Route>
+          </div>
+        </Router>
+      </NoteState>
     </>
   );
 }
