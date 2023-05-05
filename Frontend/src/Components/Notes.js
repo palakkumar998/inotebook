@@ -7,10 +7,10 @@ function Notes() {
     const { notes, setNotes } = context;
     return (
         <>
-            <div className="container">
+            <div className="row my-4">
                 <h2>Your Notes</h2>
                 {notes.map((note) => {
-                    return <NoteItem  note = {note}/>
+                    return <NoteItem key={note._id} note={note} />
                 })}
             </div>
         </>

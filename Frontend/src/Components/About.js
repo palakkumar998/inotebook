@@ -14,8 +14,9 @@ export const About = () => {
           </div>
           <div className="card-body">
             <blockquote className="blockquote mb-0">
-              <p>A well-known quote, contained in a blockquote element.</p>
-              <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+              <p>“If there's a book that you want to read, but it hasn't been written yet, then you must write it.”
+              </p>
+              <footer className="blockquote-footer"> <cite title="Source Title"> Toni Morrison</cite></footer>
             </blockquote>
           </div>
         </div>
@@ -31,9 +32,9 @@ export const About = () => {
             </div>
             <div className="col-md-8">
               <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+                <h5 className="card-title">Palak kumar</h5>
+                <p className="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed qui quis, rem et tempora error dolorem saepe aperiam nihil nostrum reiciendis consectetur nisi nesciunt labore fuga. Minima a ad placeat.</p>
+                <p className="card-text"><small className="text-muted">Founder of <b>iNotebook</b> </small></p>
               </div>
             </div>
           </div>
