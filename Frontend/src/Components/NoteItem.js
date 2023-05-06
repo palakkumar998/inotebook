@@ -5,7 +5,7 @@ function NoteItem(props) {
     return (
         <>
             <div className="col-md-3">
-                <div className="card my-3" style={{ width: "18", border: "1px solid white", borderRadius: "5px", boxShadow: " 1px 1.5px 9px black" }}>
+                <div className="card my-3" style={{ width: "18" }}>
                     <div className="card-body">
                     <i className="fa-solid fa-notebook"></i>
                         <h5 className="card-title">{note.title}</h5>
