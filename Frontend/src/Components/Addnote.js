@@ -12,8 +12,10 @@ function Addnote() {
     }
 
     const onChange = (e) => {
-        //? ...note spread operator: 
+
+        //? {...note} spread operator: 
         setNote({ ...note, [e.target.name]: e.target.value })
+        
     }
     return (
         <>

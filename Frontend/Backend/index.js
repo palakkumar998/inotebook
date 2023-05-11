@@ -1,12 +1,15 @@
 //ENTRY POINT FOR BACK END
 const connectToMongo = require('./db');
+var cors = require('cors')
 const express = require('express');
+
 
 connectToMongo();
 const app = express()
 const port = 5000;
 
 //middleware:
+app.use(cors())
 app.use(express.json())
 
 //available routes:
