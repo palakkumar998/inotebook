@@ -23,12 +23,17 @@ function Addnote() {
                 <form>
                     <div className="mb-3" style={{ width: "20rem" }} >
                         <label htmlFor="title" className="form-label" >Note Title</label>
-                        <input type="text" className="form-control" id="title" name='title' onChange={onChange} aria-describedby="emailHelp" />
+                        <input type="text" className="form-control" id="title" name='title' placeholder='enter your title here' onChange={onChange} aria-describedby="emailHelp" />
                         <div id="emailHelp" className="form-text"></div>
                     </div>
                     <div className="mb-3" >
                         <label htmlFor="description" className="form-label">Description</label>
-                        <input type="text" className="form-control" id="description" onChange={onChange} name='description' />
+                        <input type="text" className="form-control" id="description"  placeholder='enter your description here' onChange={onChange} name='description' />
+                    </div>
+                    <div className="mb-3" style={{ width: "20rem" }} >
+                        <label htmlFor="tag" className="form-label" >Tag</label>
+                        <input type="text" className="form-control" id="tag" name='tag'  placeholder= 'Example:-office' onChange={onChange} aria-describedby="emailHelp" />
+                        <div id="emailHelp" className="form-text"></div>
                     </div>
 
                     <button type="submit" onClick={clickHandle} className="btn btn-primary">Add Note</button>

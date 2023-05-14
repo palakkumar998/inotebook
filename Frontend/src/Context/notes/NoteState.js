@@ -3,7 +3,7 @@ import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
     const host = " http://localhost:5000";
-    // ! static json
+
     const notesInitial = []
     const [notes, setNotes] = useState(notesInitial);
 
@@ -22,7 +22,7 @@ const NoteState = (props) => {
         setNotes(json)
     }
 
-    // ? CRUD operation
+    // ????????????????????????? CRUD operation ?????????????????????????????????//
     // * Add a note:
     const addNote = async (title, description, tag) => {
 
@@ -49,34 +49,47 @@ const NoteState = (props) => {
         }
         setNotes(notes.concat(note))
     }
-    // * Delete a note:
-    const deletNote = (id) => {
+    // ***************************** Deleting a note***************************//
+    const deletNote = async (id) => {
 
         // todo-> API call (delete from database also):
+        const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0YmU5NmZhOTI0NDRmMzUwMTNiMTYwIn0sImlhdCI6MTY4MjY5NjU4OH0.G9A0Cn54i_z7ImorTU0CU5_eB1TeDwvT-RlHqWgQZ7g"
+            }
+        });
+
+        const json = response.json();
+        console.log(json);
+
+        // * Deleting Logic using Filter:
         console.log("deleted not id is:", id);
         const deleted = notes.filter((note) => {
             { return note._id !== id }
         })
         setNotes(deleted)
     }
-    //  * Edit a note:
+    //  **************************************Edit a note****************************************//
     const editNote = async (id, title, description, tag) => {
 
         // todo-> API call (upate in database also):
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            method: "PUT", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
                 "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0YmU5NmZhOTI0NDRmMzUwMTNiMTYwIn0sImlhdCI6MTY4MjY5NjU4OH0.G9A0Cn54i_z7ImorTU0CU5_eB1TeDwvT-RlHqWgQZ7g"
             },
             body: JSON.stringify(title, description, tag)
         });
+
         const json = response.json();
 
         // ? logic to edit in DB:
         for (let i = 0; i < notes.length; i++) {
             const element = notes[i];
-            if (element._id == id) {
+            if (element._id === id) {
                 element.title = title;
                 element.description = description;
                 element.tag = tag;
