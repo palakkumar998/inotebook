@@ -5,22 +5,31 @@ import Addnote from './Addnote';
 
 const Notes = () => {
     const context = useContext(NoteContext);
-    const { notes, getNotes } = context;
+    const { notes, getNotes, editNote } = context;
+
+
     useEffect(() => {
         // eslint-disable-next-line
         getNotes()
     }, [])
-    const [note, setNote] = useState({ etitle: "", edescription: "", etag: "default" });
 
-    const ref = useRef(null)
+
+    const [note, setNote] = useState({ _id: "", etitle: "", edescription: "", etag: "default" });
+
+
+    const refHide = useRef(null)
+    const refClose = useRef(null);
+
+
     const updateNote = (currentNote) => {
-        ref.current.click();
-        setNote({ etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
+        refHide.current.click();
+        setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
     }
 
     const handleClick = (e) => {
-        e.preventDefault();
-        console.log("updating a note " , note);
+        refClose.current.click();
+        editNote(note.id, note.etitle, note.edescription, note.etag)
+        // console.log("updating a note ", note);
     }
 
     const onChange = (e) => {
@@ -34,7 +43,7 @@ const Notes = () => {
         <>
             <Addnote />
 
-            <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" ref={refHide} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Modal
             </button>
 
@@ -64,7 +73,7 @@ const Notes = () => {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
