@@ -58,12 +58,12 @@ const Notes = () => {
                             < form>
                                 <div className="mb-3" style={{ width: "20rem" }} >
                                     <label htmlFor="title" className="form-label" >Note Title</label>
-                                    <input type="text" className="form-control" id="etitle" name='etitle' value={note.etitle} placeholder='enter your title here' onChange={onChange} aria-describedby="emailHelp" />
+                                    <input type="text" className="form-control" id="etitle" name='etitle' value={note.etitle} placeholder='enter your title here' onChange={onChange}  minLength={5} aria-describedby="emailHelp" />
                                     <div id="emailHelp" className="form-text"></div>
                                 </div>
                                 <div className="mb-3" >
                                     <label htmlFor="description" className="form-label">Description</label>
-                                    <input type="text" className="form-control" id="edescription" value={note.edescription} placeholder='enter your description here' onChange={onChange} name='edescription' />
+                                    <input type="text" className="form-control" id="edescription" value={note.edescription} placeholder='enter your description here' onChange={onChange}  minLength={5} name='edescription' />
                                 </div>
                                 <div className="mb-3" style={{ width: "20rem" }} >
                                     <label htmlFor="tag" className="form-label" >Tag</label>
@@ -74,7 +74,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" onClick={handleClick} className="btn btn-primary">Update Note</button>
+                            <button type="button"  disabled={note.etitle.length < 5 || note.edescription.length < 5} onClick={handleClick} className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>
@@ -83,12 +83,21 @@ const Notes = () => {
 
             <div className="row my-4">
                 <h2>Your Notes</h2>
+                <div className="container">
+                    <div className="jumbotron jumbotron-fluid">
+                        <div className="container" >
+                            <h1 className="display-4"  >{notes.length === 0 && "No Notes To Display Here "}</h1>
+                            <p className="lead">  {notes.length === 0 && "Please Add some interesting notes"}</p>
+                        </div>
+                    </div>
+                </div>
                 {notes.map((note) => {
                     return <NoteItem key={note._id} updateNote={updateNote} note={note} />
                 })}
             </div>
         </>
     )
+
 }
 
 export default Notes
