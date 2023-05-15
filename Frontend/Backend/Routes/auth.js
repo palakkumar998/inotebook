@@ -19,10 +19,12 @@ router.post('/createUser',
     body('password', 'password must be at-least 6 characters').isLength({ min: 6 })],
     async (req, res) => {
 
+        let success = false;
         // If there are errors, return Bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
+                success,
                 errors: errors.array()
             })
         }
@@ -33,6 +35,7 @@ router.post('/createUser',
             let user = await User.findOne({ email: req.body.email });
             if (user) {
                 return res.status(400).json({
+                    success,
                     error: "Same User with this email is already exists"
                 })
             }
@@ -60,9 +63,9 @@ router.post('/createUser',
 
             //respone return as user:
             // res.json(user);
-
+            success = true;
             // RESPONSE RETURN AS A AUTHTOKEN:
-            res.json({ authToken })
+            res.json({ success, authToken })
 
 
             // CATCHING ERROR USING ERROR.MESSAGE AND SET DEAFULT STATUS (500) WITH DAFUALT MESSAGE:          
@@ -72,7 +75,7 @@ router.post('/createUser',
         }
     })
 
-/******************ROUTE-2:CREATE USER USING POST: "api/auth/login" ****************/
+//******************ROUTE-2:CREATE USER USING POST: "api/auth/login" ****************//
 router.post('/login',
     [
         body('email', 'enter a valid email address').isEmail(),
@@ -80,6 +83,7 @@ router.post('/login',
     ]
     , async (req, res) => {
 
+        let success = false;
         // If there are errors, return Bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -94,13 +98,13 @@ router.post('/login',
         try {
             let user = await User.findOne({ email });
             if (!user) {
-                return res.status(400).json({ error: "Please try to login with correct credentials" })
+                return res.status(400).json({ success, error: "Please try to login with correct credentials" })
             }
 
             //COMPARING USER PASSWORD FROM  INPUT PASSWORD & SEND ERROR STATUS IF NOT MATCHED
             const passwordComapre = await bcrypt.compare(password, user.password);
             if (!passwordComapre) {
-                return res.status(400).json({ error: "Please try to login with correct credentials" })
+                return res.status(400).json({ success, error: "Please try to login with correct credentials" })
             }
 
 
@@ -110,7 +114,8 @@ router.post('/login',
                 }
             }
             const authToken = jwt.sign(data, JWT_secret);
-            res.json({ authToken });
+            success = true;
+            res.json({ success, authToken });
 
 
             // CATCHING ERROR USING ERROR.MESSAGE AND SET DEAFULT STATUS (500) WITH DAFUALT MESSAGE:              

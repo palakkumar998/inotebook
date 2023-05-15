@@ -8,6 +8,8 @@ import { Navbar } from './Components/Navbar';
 import { Home } from './Components/Home';
 import { About } from './Components/About';
 import NoteState from './Context/notes/NoteState';
+import Signup from './Components/Signup';
+import Login from './Components/Login';
 
 
 function App() {
@@ -22,6 +24,12 @@ function App() {
             </Route>
             <Route exact path="/about">
               <About />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
             </Route>
           </div>
         </Router>
