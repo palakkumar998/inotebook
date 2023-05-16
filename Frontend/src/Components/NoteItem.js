@@ -17,8 +17,8 @@ function NoteItem(props) {
                             updateNote(note)
                         }} ></i>
                         <i className="fa-solid fa-delete-left" onClick={() => {
-                            deletNote(note._id)
-                        }} ></i>
+                            deletNote(note._id); props.showAlert("Your Note has been deleted successfully", "success");
+                        }}  ></i>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-const Login = () => {
+const Login = (props) => {
     const [credential, setCredential] = useState({ email: '', password: '' })
     let history = useHistory()
 
@@ -20,10 +20,11 @@ const Login = () => {
             // todo save the auth toekn and redirect
             localStorage.setItem('token', json.authtoken);
             history.push("/")
+            props.showAlert("Your have logged-in successfully", "success")
 
         }
         else {
-            alert("invalid credentials")
+           props.showAlert("invalid credentials", "danger")
         }
     }
 
