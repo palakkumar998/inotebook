@@ -34,7 +34,7 @@ export const About = () => {
               <div className="card-body">
                 <h5 className="card-title">Palak kumar</h5>
                 <p className="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed qui quis, rem et tempora error dolorem saepe aperiam nihil nostrum reiciendis consectetur nisi nesciunt labore fuga. Minima a ad placeat.</p>
-                <p className="card-text"><small className="text-muted">Founder of <b>iNotebook</b> </small></p>
+                <p className="card-text"><small className="text-muted">Creator of <b>iNotebook</b> </small></p>
               </div>
             </div>
           </div>

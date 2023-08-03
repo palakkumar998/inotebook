@@ -81,7 +81,9 @@ const Notes = (props) => {
                 </div>
             </div >
 
-
+            {/* // ? for login pop up// */}
+            
+          
             <div className="row my-4">
                 <h2>Your Notes</h2>
                 <div className="container">
@@ -92,6 +94,8 @@ const Notes = (props) => {
                         </div>
                     </div>
                 </div>
+
+
                 {notes.map((note) => {
                     return <NoteItem key={note._id} updateNote={updateNote} showAlert={props.showAlert} note={note} />
                 })}

@@ -12,7 +12,7 @@ const JWT_secret = "palak1998@";
 
 /******************ROUTE-1:CREATE USER USING POST: "api/auth/CreateUser" ****************/
 
-//VALIDATION CHECKS IN DATABASE FROM USER :
+// ? VALIDATION CHECKS IN DATABASE FROM USER :
 router.post('/createUser',
     [body('name', 'enter a valid name').isLength({ min: 3 }),
     body('email', 'enter a valid email address').isEmail(),
@@ -20,7 +20,7 @@ router.post('/createUser',
     async (req, res) => {
 
         let success = false;
-        // If there are errors, return Bad request and the errors
+// ! If there are errors, return Bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
@@ -29,8 +29,8 @@ router.post('/createUser',
             })
         }
 
-        // TRY AND CATCH IS USED FOR ERROR DETECTION AND RESOLVE :
-        // TRY ALREADY EXISTS EMAIL IN DATABASE USING FINDONE FUNCTION IN JAVASCRIPT AND THEN CATCH
+//?  TRY AND CATCH IS USED FOR ERROR DETECTION AND RESOLVE :
+//? TRY ALREADY EXISTS EMAIL IN DATABASE USING FINDONE FUNCTION IN JAVASCRIPT AND THEN CATCH
         try {
             let user = await User.findOne({ email: req.body.email });
             if (user) {
@@ -40,12 +40,12 @@ router.post('/createUser',
                 })
             }
 
-            // ADDING SALT USING BCRYPTJS:      
+//? ADDING SALT USING BCRYPTJS:      
             const salt = await bcrypt.genSalt(10);
             const securePassword = await bcrypt.hash(req.body.password, salt);
 
 
-            //CREATING USER SCHEMA IN DATABSASE:            
+//? CREATING USER SCHEMA IN DATABSASE:            
             user = await User.create({
                 name: req.body.name,
                 password: securePassword,
@@ -64,11 +64,11 @@ router.post('/createUser',
             //respone return as user:
             // res.json(user);
             success = true;
-            // RESPONSE RETURN AS A AUTHTOKEN:
+//?  RESPONSE RETURN AS A AUTHTOKEN:
             res.json({ success, authToken })
 
 
-            // CATCHING ERROR USING ERROR.MESSAGE AND SET DEAFULT STATUS (500) WITH DAFUALT MESSAGE:          
+//? CATCHING ERROR USING ERROR.MESSAGE AND SET DEAFULT STATUS (500) WITH DAFUALT MESSAGE:          
         } catch (error) {
             console.error(error.message);
             res.status(500).send("Internal server error")
@@ -84,7 +84,7 @@ router.post('/login',
     , async (req, res) => {
 
         let success = false;
-        // If there are errors, return Bad request and the errors
+// ! If there are errors, return Bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
@@ -94,14 +94,14 @@ router.post('/login',
 
         const { email, password } = req.body;
 
-        //COMPARING USER EMAIL FROM  INPUT EMAIL & SEND ERROR STATUS IF NOT MATCHED
+// ? COMPARING USER EMAIL FROM  INPUT EMAIL & SEND ERROR STATUS IF NOT MATCHED
         try {
             let user = await User.findOne({ email });
             if (!user) {
                 return res.status(400).json({ success, error: "Please try to login with correct credentials" })
             }
 
-            //COMPARING USER PASSWORD FROM  INPUT PASSWORD & SEND ERROR STATUS IF NOT MATCHED
+//? COMPARING USER PASSWORD FROM  INPUT PASSWORD & SEND ERROR STATUS IF NOT MATCHED
             const passwordComapre = await bcrypt.compare(password, user.password);
             if (!passwordComapre) {
                 return res.status(400).json({ success, error: "Please try to login with correct credentials" })
@@ -118,7 +118,7 @@ router.post('/login',
             res.json({ success, authToken });
 
 
-            // CATCHING ERROR USING ERROR.MESSAGE AND SET DEAFULT STATUS (500) WITH DAFUALT MESSAGE:              
+// ? CATCHING ERROR USING ERROR.MESSAGE AND SET DEAFULT STATUS (500) WITH DAFUALT MESSAGE:              
         } catch (error) {
             console.error(error.message);
             res.status(500).send("Internal server error")
@@ -126,7 +126,7 @@ router.post('/login',
 
     })
 
-/******************ROUTE-3: GET THE USER FROM JWT-TOKEN: "api/auth/getuser" ****************/
+//******************ROUTE-3: GET THE USER FROM JWT-TOKEN: "api/auth/getuser" ****************//
 router.post('/getuser', fetchuser, async (req, res) => {
     try {
         const userId = req.user.id;
@@ -141,5 +141,5 @@ router.post('/getuser', fetchuser, async (req, res) => {
 
 })
 
-// EXPORTING MODULE:
+//?  EXPORTING MODULE:
 module.exports = router;

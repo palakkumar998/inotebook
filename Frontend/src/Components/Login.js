@@ -17,7 +17,7 @@ const Login = (props) => {
         const json = await response.json();
         console.log(json);
         if (json.success) {
-            // todo save the auth toekn and redirect
+            // ? save the auth toekn and redirect
             localStorage.setItem('token', json.authtoken);
             history.push("/")
             props.showAlert("Your have logged-in successfully", "success")
